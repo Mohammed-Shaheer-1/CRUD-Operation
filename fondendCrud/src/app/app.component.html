@@ -1,0 +1,60 @@
+<!-- <app-dialog [id]="productid"></app-dialog> -->
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>supervised_user_circle</mat-icon>
+  </button>
+  <span>My App</span>
+  <span class="example-spacer"></span>
+  <button mat-raised-button color="warn" (click)="openDialog()">Add Product </button>
+
+</mat-toolbar>
+<div style="margin-left: 135px; " >
+  <mat-form-field  appearance="standard">
+    <mat-label class="text-primary">Search</mat-label>
+    <input matInput [(ngModel)]="searchvalue" placeholder="Ex. ium" #input>
+  </mat-form-field>
+</div>
+
+<div class="container">
+  <div style="margin-top: 10px;">
+    <table class="table">
+      <thead style="background-color:rgba(24, 82, 189, 0.986) ;" class="text-white">
+        <tr>
+          <th scope="col">Product Name</th>
+          <th scope="col">Category</th>
+          <th scope="col">Date</th>
+          <th scope="col">Freshness</th>
+          <th scope="col">Price</th>
+          <th scope="col">Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-light" *ngFor="let item of product">
+         <ng-container *ngIf="searchvalue=='' || item.productName.toLowerCase().includes(searchvalue)">
+          <th scope="row">{{item.productName}}</th>
+          <!-- <ng-container matColumnDef=""></ng-container> -->
+          <td>{{item.category}}</td>
+          <td>{{item.date | date}}</td>
+          <td>{{item.freshness}}</td>
+          <td>{{item.price | currency:"INR"}}</td>
+          <td>{{item.comment}}</td>
+         <td> 
+           <button   mat-icon-button color="primary"  (click)="open(item._id)"><mat-icon>edit</mat-icon></button>
+          
+          <button mat-icon-button color="warn" (click)="deleteProduct(item._id,item.productName)" ><mat-icon>delete</mat-icon></button>
+        </td>
+                </ng-container>
+        </tr>
+
+      </tbody>
+    </table>
+    <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+</mat-paginator>
+
+  </div>
+</div>
+
+
